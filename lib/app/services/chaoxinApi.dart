@@ -24,6 +24,18 @@ class Chaoxinapi extends GetxController {
     // 使用 PersistCookieJar 保存到文件
     cookieJar = PersistCookieJar(storage: FileStorage(cookiePath));
 
+
+    // 检查本地 cookie 文件是否存在
+    final dir = Directory(cookiePath);
+    if (await dir.exists()) {
+      print("Cookie 文件夹存在");
+      final files = dir.listSync();
+      print("Cookie 文件夹内容: ${files.map((e) => e.path).toList()}");
+    } else {
+      print("Cookie 文件夹不存在，会自动创建");
+    }
+
+
     // 添加拦截器
     dio.interceptors.add(CookieManager(cookieJar));
 
@@ -33,17 +45,18 @@ class Chaoxinapi extends GetxController {
     };
     // 从文件加载所有域名 cookies
     await loadCookies();
+
   }
 
 
   /**
-   * 从文件加载 cookies
+   * 设置cookies
    */
   Future<void> loadCookies() async {
     // 对于每个需要访问的域名都加载 cookies
     List<String> domains = [
-      "https://passport2-api.chaoxing.com",
-      "https://sso.chaoxing.com",
+      //"https://passport2-api.chaoxing.com",
+      //"https://sso.chaoxing.com",
       "http://mooc1-api.chaoxing.com/mycourse/backclazzdata",
       "https://mobilelearn.chaoxing.com/ppt/activeAPI/taskactivelist",
       "https://mobilelearn.chaoxing.com/v2/apis/active/student/activelist",
@@ -121,25 +134,24 @@ class Chaoxinapi extends GetxController {
     final courseWrapper = CourseDataWrapper.fromJson(data);
 
 // 3. 访问课程信息
-    // 遍历课程列表
-    if (courseWrapper.channelList != null) {
-      for (var channel in courseWrapper.channelList!) {
-        print("目录名称: ${channel.cataName}");
-
-        final classId = channel.content?.id; // 班级id
-        final className = channel.content?.name; // 班级名称
-
-        if (channel.content?.course?.data != null) {
-          for (var course in channel.content!.course!.data!) {
-            print("课程名: ${course.name}");
-            print("课程id: ${course.id}");
-            print("班级id: $classId");
-            print("班级名称: $className");
-          }
-        }
-      }
-    }
-
+//     // 遍历课程列表
+//     if (courseWrapper.channelList != null) {
+//       for (var channel in courseWrapper.channelList!) {
+//         print("目录名称: ${channel.cataName}");
+//
+//         final classId = channel.content?.id; // 班级id
+//         final className = channel.content?.name; // 班级名称
+//
+//         if (channel.content?.course?.data != null) {
+//           for (var course in channel.content!.course!.data!) {
+//             print("课程名: ${course.name}");
+//             print("课程id: ${course.id}");
+//             print("班级id: $classId");
+//             print("班级名称: $className");
+//           }
+//         }
+//       }
+//     }
 
 
     return courseWrapper;
@@ -296,7 +308,21 @@ Future getPosition(var activeId)async{
 /**
  * 二维码签到
  */
+Future qrSign(var activeId,var enc,var fid)async{
+  final response = await dio.get(
+    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax',
+    queryParameters: {
+      "activeId":activeId.toString(),
+      "enc":enc.toString(),
+      "fid":fid.toString(),
+    },
+    options: Options(
+      contentType: Headers.formUrlEncodedContentType,
+    ),
+  );
+  //这里不需要他的返回值
 
+}
 
 
 

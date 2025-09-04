@@ -8,6 +8,8 @@ abstract class Routes {
   static const USER = _Paths.USER;
   static const CLASS = _Paths.CLASS;
   static const CHECK_IN = _Paths.CHECK_IN;
+
+  static const SCAN = _Paths.SCAN;
 }
 
 abstract class _Paths {
@@ -16,4 +18,5 @@ abstract class _Paths {
   static const USER = '/user';
   static const CLASS = '/class';
   static const CHECK_IN = '/check-in';
+  static const SCAN = '/scan';
 }

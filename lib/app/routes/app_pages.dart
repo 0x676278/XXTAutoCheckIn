@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 
+
 import '../modules/check_in/bindings/check_in_binding.dart';
 import '../modules/check_in/views/check_in_view.dart';
 import '../modules/class/bindings/class_binding.dart';
 import '../modules/class/views/class_view.dart';
+import '../modules/scan/bindings/scan_binding.dart';
+import '../modules/scan/views/scan_view.dart';
 import '../modules/tabs/bindings/tabs_binding.dart';
 import '../modules/tabs/views/tabs_view.dart';
 import '../modules/user/bindings/user_binding.dart';
@@ -36,6 +39,12 @@ class AppPages {
       name: _Paths.CHECK_IN,
       page: () => const CheckInView(),
       binding: CheckInBinding(),
+    ),
+
+    GetPage(
+      name: _Paths.SCAN,
+      page: () =>  ScanView(),
+      binding: ScanBinding(),
     ),
   ];
 }

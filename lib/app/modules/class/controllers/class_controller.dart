@@ -1,23 +1,24 @@
+
 import 'package:get/get.dart';
+import '../../../moudel/courseModel.dart';
+import '../../../services/chaoxinApi.dart';
+
+
 
 class ClassController extends GetxController {
-  //TODO: Implement ClassController
+  var courseWrapper = CourseDataWrapper().obs; // 整个课程表对象
+  final chaoxinapi = Get.find<Chaoxinapi>();
 
-  final count = 0.obs;
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    await Future.delayed(Duration(milliseconds: 300)); // 延时 300ms
+    fetchCourseData();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  void fetchCourseData() async {
+      final wrapper = await chaoxinapi.getClassTable();
+      courseWrapper.value = wrapper;
+      print(wrapper);
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
-}
+}}

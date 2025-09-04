@@ -13,11 +13,8 @@ class CheckInView extends GetView<CheckInController> {
         title: const Text('CheckInView'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'CheckInView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: Center(
+        child:ElevatedButton(onPressed: (){Get.toNamed("/scan");}, child: Text("扫描"))
       ),
     );
   }
