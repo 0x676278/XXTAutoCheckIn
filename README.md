@@ -1,4 +1,4 @@
-# 🏫 AutoCheckIn / 上不上早八
+# 🏫 AutoCheckIn / 不上早八
 
 **学习通签到客户端，2025 可用**  
 
