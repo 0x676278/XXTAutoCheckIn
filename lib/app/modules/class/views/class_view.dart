@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/class_controller.dart';
 
-
 class ClassView extends GetView<ClassController> {
   const ClassView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('我的课程'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('我的课程'), centerTitle: true),
       body: Obx(() {
         final wrapper = controller.courseWrapper.value;
 
@@ -30,7 +26,9 @@ class ClassView extends GetView<ClassController> {
             return Card(
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               elevation: 3,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
@@ -48,33 +46,43 @@ class ClassView extends GetView<ClassController> {
                     // 课程列表
                     if (content.course?.data != null)
                       ...content.course!.data!.map((course) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 6),
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            //color: Colors.blue[50],
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '课程名称: ${course.name ?? '未知'}',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                        return InkWell(
+                          onTap: () {
+                            // 将班级ID和当前课程对象传给控制器
+                            controller.checkIfActive(
+                              course.id ?? 0,
+                              content.id ?? 0,
+                            );
+                          },
+                          child: Container(
+                            //height: double.infinity,
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(vertical: 6),
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '课程名称: ${course.name ?? '未知'}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '课程ID: ${course.id ?? '未知'}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                              Text(
-                                '教师: ${course.teacherfactor ?? '未知'}',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
+                                const SizedBox(height: 4),
+                                Text(
+                                  '课程ID: ${course.id ?? '未知'}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                Text(
+                                  '教师: ${course.teacherfactor ?? '未知'}',
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       }).toList(),

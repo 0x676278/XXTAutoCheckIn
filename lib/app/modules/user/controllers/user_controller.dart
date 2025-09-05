@@ -1,15 +1,44 @@
+import 'package:autocheckin/app/services/chaoxinApi.dart';
 import 'package:get/get.dart';
 
-import '../../../services/chaoxinApi.dart';
+import '../../../global/GlobalController.dart';
+import '../../../global/dio_client.dart';
 
 class UserController extends GetxController {
   //TODO: Implement UserController
-  final chaoxinapi = Get.find<Chaoxinapi>();
+  //引入全局控制器
+  final GlobalController globalController = Get.find<GlobalController>();
+  final Chaoxinapi chaoxinapi = Get.find<Chaoxinapi>();
+//要展示的数据
+ var name = ''.obs;
+ var pic = ''.obs;
+ var stuId = ''.obs;
+ var schoolName = ''.obs;
 
   final count = 0.obs;
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    //test登陆
+   // await chaoxinapi.chaoxingLogin("18652804769", "GB2099816905");
+    //从全局控制器获取数据
+    getUserInfo();
+    // 页面监听器
+    pageListener();
+
+  }
+  /**
+   * 获取用户信息
+   */
+  void getUserInfo(){
+    name.value = globalController.userName.value;
+    pic.value = globalController.pic.value;
+    stuId.value = globalController.stuId.value;
+    schoolName.value = globalController.schoolName.value;
+    print(name.value);
+    print(pic.value);
+    print(stuId.value);
+    print(schoolName.value);
   }
 
   @override
@@ -24,21 +53,25 @@ class UserController extends GetxController {
 
   void increment() => count.value++;
 
+Future changeUser() async{
+  await chaoxinapi.clearAllCookies();
+  globalController.saveLoginInfo("", "", [], false, "", "", "", "");
+  Get.toNamed("/login");
+}
 
 
-  Future testApi() async{
-    print("------------开始测试登陆------------");
-    var result = await chaoxinapi.chaoxingLogin('18652804769','GB2099816905');
-    print("登录结果：$result");
-
-    print("------------开始测试获取课程表------------");
-    var result1 = await chaoxinapi.getClassTable();
-    print("课程表结果：$result1");
-
-    print("------------开始测试获取签到任务------------");
-    var result2 = await chaoxinapi.getSignTask(16820,254713480,126055093);
-    print("签到任务结果：$result2");
-
-
+  /**
+   * 页面监听器
+   */
+  void pageListener() async {
+    // 监听 count 的变化
+    ever(globalController.index, (value) async{
+      if (value == 2) {
+        print("正在刷新");
+        getUserInfo();
+      }
+    });
   }
+
+
 }

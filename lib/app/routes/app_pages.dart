@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 
-
 import '../modules/check_in/bindings/check_in_binding.dart';
 import '../modules/check_in/views/check_in_view.dart';
 import '../modules/class/bindings/class_binding.dart';
 import '../modules/class/views/class_view.dart';
+import '../modules/login/bindings/login_binding.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/qrSign/bindings/qr_sign_binding.dart';
+import '../modules/qrSign/views/qr_sign_view.dart';
 import '../modules/scan/bindings/scan_binding.dart';
 import '../modules/scan/views/scan_view.dart';
 import '../modules/tabs/bindings/tabs_binding.dart';
@@ -40,11 +43,20 @@ class AppPages {
       page: () => const CheckInView(),
       binding: CheckInBinding(),
     ),
-
     GetPage(
       name: _Paths.SCAN,
-      page: () =>  ScanView(),
+      page: () => ScanView(),
       binding: ScanBinding(),
+    ),
+    GetPage(
+      name: _Paths.QR_SIGN,
+      page: () => const QrSignView(),
+      binding: QrSignBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN,
+      page: () => const LoginView(),
+      binding: LoginBinding(),
     ),
   ];
 }

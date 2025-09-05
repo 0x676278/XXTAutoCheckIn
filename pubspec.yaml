@@ -41,7 +41,7 @@ dependencies:
   intl: ^0.20.2
   cookie_jar: ^4.0.8
   dio_cookie_manager: ^3.3.0
-  mobile_scanner: ^2.0.0
+  mobile_scanner: ^7.0.1
   encrypt: ^5.0.1
   #test: ^1.26.3
 
