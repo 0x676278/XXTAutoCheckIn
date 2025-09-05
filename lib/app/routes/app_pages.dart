@@ -6,6 +6,8 @@ import '../modules/class/bindings/class_binding.dart';
 import '../modules/class/views/class_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/positionSign/bindings/position_sign_binding.dart';
+import '../modules/positionSign/views/position_sign_view.dart';
 import '../modules/qrSign/bindings/qr_sign_binding.dart';
 import '../modules/qrSign/views/qr_sign_view.dart';
 import '../modules/scan/bindings/scan_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.LOGIN,
       page: () => const LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.POSITION_SIGN,
+      page: () => const PositionSignView(),
+      binding: PositionSignBinding(),
     ),
   ];
 }

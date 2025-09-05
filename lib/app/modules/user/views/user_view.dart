@@ -101,7 +101,9 @@ class UserView extends GetView<UserController> {
 
   Widget frendsAuth() {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Get.snackbar("功能正在开发中","");
+      },
       child: Card(
         color: Colors.yellow[700],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
