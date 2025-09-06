@@ -15,9 +15,10 @@ class CheckInView extends GetView<CheckInController> {
 
   Widget CheckMenu() {
     return Container(
-      child: Column(
+      child: ListView(
         children: [
           searchForActive(),
+          getPosition(),
           Container(
             margin: const EdgeInsets.all(10),
             height: 50,
@@ -36,14 +37,28 @@ class CheckInView extends GetView<CheckInController> {
 
   Widget searchForActive() {
     return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black, // 边框颜色
+          width: 2, // 边框宽度
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
       margin: const EdgeInsets.all(10),
-      height: 120,
+      height: 180,
       width: double.infinity,
       child: Column(
         children: [
           Container(
+            margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+            alignment: Alignment.topLeft, // 正确写法
             height: 30,
-            margin: const EdgeInsets.all(10),
+            child: const Text("当前正在进行的签到活动:", style: TextStyle(fontSize: 20)),
+          ),
+          SizedBox(height: 10),
+          Container(
+            height: 50,
+
             child: Obx(() {
               if (controller.is_loading.value) {
                 return CircularProgressIndicator();
@@ -65,6 +80,63 @@ class CheckInView extends GetView<CheckInController> {
                 controller.searchForActive();
               },
               child: const Text("刷新"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getPosition() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black, // 边框颜色
+          width: 2, // 边框宽度
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      margin: const EdgeInsets.all(10),
+      height: 180,
+      width: double.infinity,
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.fromLTRB(15, 10, 0, 0),
+            alignment: Alignment.topLeft, // 正确写法
+            height: 30,
+            child: const Text("当前的位置:", style: TextStyle(fontSize: 20)),
+          ),
+          SizedBox(height: 10),
+          Container(
+            height: 50,
+
+            child: Obx(() {
+              if (controller.locationController.isLoading.value) {
+                return CircularProgressIndicator();
+              } else {
+                return Text(
+                  "经度:${controller.locationController.longitude.value},纬度:${controller.locationController.latitude.value}",
+                );
+              }
+            }),
+          ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            height: 50,
+            width: double.infinity,
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(onPressed: () {
+                    controller.locationController.getLocation();
+                  }, child: Text("获取位置")),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton(onPressed: () {}, child: Text("手动输入")),
+                ),
+              ],
             ),
           ),
         ],

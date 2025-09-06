@@ -28,6 +28,10 @@ class GlobalController extends GetxController {
   var classId = ''.obs;
   var courseId = ''.obs;
 
+  //经纬度信息
+  var latitude = '-1'.obs;
+  var longitude = '-1'.obs;
+
 
   /**
    * 启动时读取本地全局数据

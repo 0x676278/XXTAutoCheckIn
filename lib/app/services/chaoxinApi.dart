@@ -360,7 +360,7 @@ Future positionSign(var address,var activeId,var latitude,var longitude,var fid)
  */
 Future getPosition(var activeId)async{
   final response = await dio.get(
-    'https://mobilelearn.chaoxing.com/v2/apis/active/getPPTActiveInfo?activeId=${activeId}',
+    'https://mobilelearn.chaoxing.com/v2/apis/active/getPPTActiveInfo',
     queryParameters: {
       "activeId":activeId.toString(),
     },
@@ -368,6 +368,10 @@ Future getPosition(var activeId)async{
       contentType: Headers.formUrlEncodedContentType,
     ),
   );
+  //序列化
+  print("!!!!!!位置信息结果：${response.data}");
+  return response.data["data"];
+
   //这里不需要他的返回值
 }
 
@@ -375,18 +379,15 @@ Future getPosition(var activeId)async{
 /**
  * 二维码签到
  */
-Future qrSign(var activeId,var enc,var fid)async{
+Future qrSign(var activeId,var enc,var uid,var fid,var latitude,var longitude,var location)async{
+  //复盘一下登陆信息
+
+
+
   final response = await dio.get(
-    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax',
-    queryParameters: {
-      "activeId":activeId.toString(),
-      "enc":enc.toString(),
-      "fid":fid.toString(),
-    },
-    options: Options(
-      contentType: Headers.formUrlEncodedContentType,
-    ),
+    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax?enc=${enc}&activeId=${activeId}&uid=${uid}&clientip=&location=${location}&latitude=-1&longitude=-1&fid=${fid}&appType=15&vpProbability=&vpStrategy=',
   );
+
   //这里不需要他的返回值
   print("!!!!!!!!!!!二维码签到结果：${response.data}");
   return response.data;
@@ -408,26 +409,9 @@ Future getValidate()async{
   /**
    * 有滑块验证时需要二次请求
    */
-  Future secondQrSign(var enc,var activeId,var uid,var latitude,var longitude,var fid,var validate) async{
+  Future secondQrSign(var enc,var activeId,var uid,var latitude,var longitude,var fid,var validate,var location) async{
   final response = await dio.get(
-    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax',
-    queryParameters: {
-      "enc":enc,
-      "activeId":activeId,
-      "uid":uid,
-      "clientip":"",
-      "location":"",
-      "latitude":latitude,
-      "longitude":longitude,
-      "fid":fid,
-      "appType":"15",
-      "validate":validate,
-      "vpProbability":"",
-      "vpStrategy":"",
-    },
-    options: Options(
-      contentType: Headers.formUrlEncodedContentType,
-    ),
+    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax?enc=${enc}&activeId=${activeId}&uid=${uid}&clientip=&location=${location}&latitude=-1&longitude=-1&fid=${fid}&appType=15&validate=${validate}&vpProbability=&vpStrategy=',
   );
   print("!!!!!!!!!!!二次签到结果：${response.data}");
   return response.data;

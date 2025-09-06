@@ -2,6 +2,8 @@ import 'package:autocheckin/app/global/GlobalController.dart';
 import 'package:autocheckin/app/services/chaoxinApi.dart';
 import 'package:get/get.dart';
 
+import '../../../global/location_controller.dart';
+
 class CheckInController extends GetxController {
   //TODO: Implement CheckInController
   var is_loading = false.obs;
@@ -10,6 +12,7 @@ class CheckInController extends GetxController {
 
   final Chaoxinapi chaoxinapi = Get.put(Chaoxinapi());
   final GlobalController globalController = Get.put(GlobalController());
+  final LocationController locationController = Get.put(LocationController());
 
   final count = 0.obs;
   @override

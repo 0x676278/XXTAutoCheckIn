@@ -4,6 +4,7 @@ import '../modules/check_in/bindings/check_in_binding.dart';
 import '../modules/check_in/views/check_in_view.dart';
 import '../modules/class/bindings/class_binding.dart';
 import '../modules/class/views/class_view.dart';
+
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/positionSign/bindings/position_sign_binding.dart';
@@ -65,5 +66,6 @@ class AppPages {
       page: () => const PositionSignView(),
       binding: PositionSignBinding(),
     ),
+
   ];
 }
