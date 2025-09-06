@@ -45,6 +45,7 @@ dependencies:
   encrypt: ^5.0.1
   geolocator: ^14.0.2
   location: ^8.0.1
+  auto_scroll_text: ^0.0.7
   #amap_flutter_location: ^3.0.0
   #test: ^1.26.3
 

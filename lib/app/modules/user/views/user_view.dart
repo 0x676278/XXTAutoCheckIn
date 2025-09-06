@@ -9,7 +9,7 @@ class UserView extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('MeView'), centerTitle: true),
+      appBar: AppBar(title: const Text('我的'), centerTitle: true),
       body: userSection(),
     );
   }
@@ -28,6 +28,8 @@ class UserView extends GetView<UserController> {
           frendsAuth(),
           const SizedBox(height: 16),
           exit(),
+          const SizedBox(height: 16),
+          feedback(),
         ],
       ),
     );
@@ -150,6 +152,74 @@ class UserView extends GetView<UserController> {
       ),
     );
   }
+
+  Widget feedback() {
+    return InkWell(
+      onTap: () {
+        final TextEditingController controller = TextEditingController();
+
+        Get.dialog(
+          AlertDialog(
+            title: const Text("反馈"),
+            content: TextField(
+              controller: controller,
+              maxLines: 5,
+              decoration: const InputDecoration(
+                hintText: "请输入您的反馈内容...",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Get.back(); // 关闭对话框
+                },
+                child: const Text("取消"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  String feedbackText = controller.text;
+                  // 在这里处理提交逻辑，比如上传到服务器
+                  debugPrint("用户反馈内容: $feedbackText");
+
+                  Get.back(); // 关闭对话框
+                  Get.snackbar(
+                    "反馈成功",
+                    "感谢您的反馈！",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.green.withOpacity(0.7),
+                    colorText: Colors.white,
+                    duration: Duration(seconds: 1)
+                  );
+                },
+                child: const Text("提交"),
+              ),
+            ],
+          ),
+        );
+      },
+      child: Card(
+        color: Colors.blue[700],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Center(
+            child: Text(
+              "反馈",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+
+
+}
 
 
 }
