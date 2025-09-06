@@ -334,21 +334,9 @@ Future commonSign(var activeId)async{
 /**
  * 位置签到
  */
-Future positionSign(var address,var activeId,var latitude,var longitude,var fid) async{
+Future positionSign(var address,var activeId,var latitude,var longitude,var fid,var uid) async{
   final response = await dio.get(
-    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax',
-    queryParameters: {
-      "address":address.toString(),
-      "activeId":activeId.toString(),
-      "latitude":latitude.toString(),
-      "longitude":longitude.toString(),
-      "fid":fid.toString(),
-      "appType":"15",
-      "ifTiJiao":"1",
-    },
-    options: Options(
-      contentType: Headers.formUrlEncodedContentType,
-    ),
+    'https://mobilelearn.chaoxing.com/pptSign/stuSignajax?address=${address}&activeId=${activeId}&uid=${uid}&clientip=&latitude=${latitude}&longitude=${longitude}&fid=${fid}&appType=15&ifTiJiao=1&validate=&vpProbability=&vpStrategy=&currentFaceId=&ifCFP=0',
   );
   //这里不需要他的返回值
 
@@ -417,6 +405,34 @@ Future getValidate()async{
   return response.data;
 
 }
+
+/**
+ * 有滑块验证时需要二次请求
+ */
+  Future secondPositionSign(var address,var activeId,var latitude,var longitude,var fid,var uid,var validate) async{
+    final response = await dio.get(
+      'https://mobilelearn.chaoxing.com/pptSign/stuSignajax?address=${address}&activeId=${activeId}&uid=${uid}&clientip=&latitude=${latitude}&longitude=${longitude}&fid=${fid}&appType=15&ifTiJiao=1&validate=${validate}&vpProbability=&vpStrategy=&currentFaceId=&ifCFP=0',
+    );
+    //这里不需要他的返回值
+
+  }
+
+
+
+/**
+ * 有滑块验证时需要二次请求
+ */
+  /**
+   * 普通签到
+   */
+  Future secondCommonSign(var activeId,var validate)async{
+    final response = await dio.get(
+      'https://mobilelearn.chaoxing.com/pptSign/stuSignajax?activeId=${activeId}&validate=${validate}',
+    );
+    //这里不需要他的返回值
+  }
+
+
 
 
 }

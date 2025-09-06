@@ -1,8 +1,10 @@
 import 'package:autocheckin/app/global/GlobalController.dart';
+import 'package:autocheckin/app/modules/positionSign/controllers/position_sign_controller.dart';
 import 'package:autocheckin/app/services/chaoxinApi.dart';
 import 'package:get/get.dart';
 
 import '../../../global/location_controller.dart';
+import '../../commonSign/controllers/common_sign_controller.dart';
 
 class CheckInController extends GetxController {
   //TODO: Implement CheckInController
@@ -10,10 +12,11 @@ class CheckInController extends GetxController {
   var activeName = "".obs;
   var hasActive = false.obs;
 
-  final Chaoxinapi chaoxinapi = Get.put(Chaoxinapi());
-  final GlobalController globalController = Get.put(GlobalController());
-  final LocationController locationController = Get.put(LocationController());
-
+  final Chaoxinapi chaoxinapi = Get.find();
+  final GlobalController globalController = Get.find();
+  final LocationController locationController = Get.find();
+  final PositionSignController positionSignController=Get.find<PositionSignController>();
+  final CommonSignController commonSignController=Get.find<CommonSignController>();
   final count = 0.obs;
   @override
   void onInit() {

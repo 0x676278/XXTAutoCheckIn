@@ -17,6 +17,7 @@ class CheckInView extends GetView<CheckInController> {
     return Container(
       child: ListView(
         children: [
+          tips(),
           searchForActive(),
           getPosition(),
           Container(
@@ -28,6 +29,30 @@ class CheckInView extends GetView<CheckInController> {
                 Get.toNamed("/scan");
               },
               child: const Text("扫码签到"),
+            ),
+          ),
+          SizedBox(height: 5,),
+          Container(
+            margin: const EdgeInsets.all(10),
+            height: 50,
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                controller.positionSignController.positionSign();
+              },
+              child: const Text("位置签到"),
+            ),
+          ),
+          SizedBox(height: 5,),
+          Container(
+            margin: const EdgeInsets.all(10),
+            height: 50,
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                controller.commonSignController.commonSign();
+              },
+              child: const Text("普通签到"),
             ),
           ),
         ],
@@ -143,4 +168,63 @@ class CheckInView extends GetView<CheckInController> {
       ),
     );
   }
+
+  Widget tips() {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        final controller = AnimationController(
+          vsync: Scaffold.of(context),
+          duration: const Duration(seconds: 15),
+        )..repeat();
+
+        const text =
+            "🔥🔥请在签到前先点击刷新获取签到活动，在点击获取位置获取位置信息，需要自行判断签到类型，暂不支持群聊内的位置签到（二维码签到可以），有任何问题请到用户选项下反馈，应用会持续更新🔥🔥";
+
+        return Container(
+          height: 30,
+          width: double.infinity,
+          color: Colors.deepOrange,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              // 计算文字真实宽度
+              final textPainter = TextPainter(
+                text: const TextSpan(
+                  text: text,
+                  style: TextStyle(color: Colors.white),
+                ),
+                textDirection: TextDirection.ltr,
+              )..layout();
+
+              final textWidth = textPainter.width;
+              final start = constraints.maxWidth;
+              final end = -textWidth;
+
+              return AnimatedBuilder(
+                animation: controller,
+                builder: (context, child) {
+                  final dx = start + (end - start) * controller.value;
+                  return Transform.translate(
+                    offset: Offset(dx, 0),
+                    child: child,
+                  );
+                },
+                // 关键：给文字自己的宽度，避免被父容器裁剪
+                child: SizedBox(
+                  width: textWidth,
+                  child: Text(
+                    text,
+                    style: const TextStyle(color: Colors.white),
+                    maxLines: 1,
+                    overflow: TextOverflow.visible,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+
 }

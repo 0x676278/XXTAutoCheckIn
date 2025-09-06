@@ -12,7 +12,6 @@ abstract class Routes {
   static const SCAN = _Paths.SCAN;
   static const QR_SIGN = _Paths.QR_SIGN;
   static const LOGIN = _Paths.LOGIN;
-  static const POSITION_SIGN = _Paths.POSITION_SIGN;
 
 }
 
@@ -25,6 +24,5 @@ abstract class _Paths {
   static const SCAN = '/scan';
   static const QR_SIGN = '/qr-sign';
   static const LOGIN = '/login';
-  static const POSITION_SIGN = '/position-sign';
 
 }
