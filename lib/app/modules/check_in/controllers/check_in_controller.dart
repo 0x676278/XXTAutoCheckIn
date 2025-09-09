@@ -48,10 +48,10 @@ class CheckInController extends GetxController {
     else{
       //当前有可签到任务
       //写入全局变量
-      globalController.activeId.value = res["activeId"];
-      globalController.classId.value = res["classId"];
-      globalController.courseId.value = res["courseId"];
-      activeName.value = res["name"];
+      globalController.activeId.value = res["activeId"].toString();
+      globalController.classId.value = res["classId"].toString();
+      globalController.courseId.value = res["courseId"].toString();
+      activeName.value = res["name"].toString();
       hasActive.value = true;
     }
     is_loading.value = false;
