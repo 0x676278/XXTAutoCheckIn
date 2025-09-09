@@ -32,6 +32,10 @@ class GlobalController extends GetxController {
   var latitude = '-1'.obs;
   var longitude = '-1'.obs;
 
+  //协同签到
+  //好友账号密码
+
+
 
   /**
    * 启动时读取本地全局数据
