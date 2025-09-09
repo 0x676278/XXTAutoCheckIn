@@ -8,6 +8,8 @@ import '../modules/class/bindings/class_binding.dart';
 import '../modules/class/views/class_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/multipleScan/bindings/multiple_scan_binding.dart';
+import '../modules/multipleScan/views/multiple_scan_view.dart';
 import '../modules/qrSign/bindings/qr_sign_binding.dart';
 import '../modules/qrSign/views/qr_sign_view.dart';
 import '../modules/scan/bindings/scan_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.ACCOUNT_MANAGER,
       page: () => const AccountManagerView(),
       binding: AccountManagerBinding(),
+    ),
+    GetPage(
+      name: _Paths.MULTIPLE_SCAN,
+      page: () =>  MultipleScanView(),
+      binding: MultipleScanBinding(),
     ),
   ];
 }

@@ -13,11 +13,23 @@ import '../moudel/courseModel.dart';
  * 创建对象后必须调用login方法登录获取cookies
  */
 class ChaoxinapiForMultiple extends GetxController {
-  final globalController = Get.find<GlobalController>();
   final Dio dio = Dio();
   late CookieJar cookieJar; // 改为内存 CookieJar
   var classId = 0.obs;
 
+
+
+  // 构造函数手动初始化
+  ChaoxinapiForMultiple() {
+    cookieJar = CookieJar();
+    dio.interceptors.add(CookieManager(cookieJar));
+    dio.options.headers = {
+      "User-Agent":
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ..."
+    };
+  }
+
+//手动创建是不会调用oninit的
   @override
   void onInit() {
     super.onInit();
@@ -32,7 +44,28 @@ class ChaoxinapiForMultiple extends GetxController {
       "User-Agent":
       "Mozilla/5.0 (iPhone; CPU iPhone OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 (schild:16af8f4ce32c6ffcd6c77ae19bcb6c09) (device:iPhone14,6) Language/zh-Hans com.ssreader.XueZaiXiDianStudy/ChaoXingStudy_1000149_6.2.8_ios_phone_202409301548_235 (@Kalimdor)_9473433864088185778"
     };
+
+   //loadCookies();
   }
+
+
+
+  Future<void> loadCookies() async {
+    // 等登录成功后再打印或绑定 Cookie
+    List<String> domains = [
+      "https://sso.chaoxing.com",
+      "http://mooc1-api.chaoxing.com/mycourse/backclazzdata",
+      "https://mobilelearn.chaoxing.com/ppt/activeAPI/taskactivelist",
+      "https://mobilelearn.chaoxing.com/v2/apis/active/student/activelist",
+    ];
+
+    for (var domain in domains) {
+      List cookies = await cookieJar.loadForRequest(Uri.parse(domain));
+      print("已加载 $domain 的 Cookies: $cookies");
+    }
+  }
+
+
 
   @override
   void onClose() {
@@ -40,6 +73,10 @@ class ChaoxinapiForMultiple extends GetxController {
     cookieJar.deleteAll();
     super.onClose();
   }
+
+
+
+
 
   /// 超星登录方法，登录成功后 cookies 会存到当前对象的内存 CookieJar
   Future chaoxingLogin(String username, String password) async {
@@ -53,13 +90,19 @@ class ChaoxinapiForMultiple extends GetxController {
       Map<String, dynamic> data =
       response.data is String ? jsonDecode(response.data) : response.data;
 
+      Get.snackbar("登陆消息", data["mes"]);
+
+      //登录成功后加载cookies
+      await loadCookies();
       print("登录验证响应: $data");
       final ssoUrl = data["url"];
       if (ssoUrl != null) {
         final ssoResponse = await dio.get(ssoUrl);
         if (ssoResponse.statusCode == 200) {
           print("SSO 登录完成");
+          //print(ssoResponse.data);
           print(jsonDecode(ssoResponse.data)["msg"]);
+
         }
         var uid = jsonDecode(ssoResponse.data)["msg"]["uid"];
         var fid = jsonDecode(ssoResponse.data)["msg"]["fid"];
@@ -67,19 +110,11 @@ class ChaoxinapiForMultiple extends GetxController {
           Get.snackbar("登陆错误", "当前账号未认证，请先到学习通-账号管理-绑定学校");
           return null;
         }
-        globalController.saveLoginInfo(
-          uid.toString(),
-          fid.toString(),
-          [],
-          true,
-          jsonDecode(ssoResponse.data)["msg"]["schoolname"],
-          jsonDecode(ssoResponse.data)["msg"]["name"],
-          jsonDecode(ssoResponse.data)["msg"]["uname"],
-          jsonDecode(ssoResponse.data)["msg"]["pic"],
-        );
         print("登录成功");
         print("uid: $uid");
-        return jsonDecode(ssoResponse.data)["msg"];
+        print("fid: $fid");
+        var userinfo = {"uid": uid, "fid": fid};
+        return userinfo;
       }
       return null;
     } catch (e) {

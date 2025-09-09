@@ -14,6 +14,7 @@ abstract class Routes {
   static const LOGIN = _Paths.LOGIN;
   static const SIGN_PROXY = _Paths.SIGN_PROXY;
   static const ACCOUNT_MANAGER = _Paths.ACCOUNT_MANAGER;
+  static const MULTIPLE_SCAN = _Paths.MULTIPLE_SCAN;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const LOGIN = '/login';
   static const SIGN_PROXY = '/sign-proxy';
   static const ACCOUNT_MANAGER = '/account-manager';
+  static const MULTIPLE_SCAN = '/multiple-scan';
 }

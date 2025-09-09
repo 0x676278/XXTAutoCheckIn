@@ -10,11 +10,18 @@ class AccountManager extends GetxController {
   final String storageKey = "account_list";
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    await GetStorage.init(); // ✅ 必须初始化
     loadAccounts();
   }
 
+
+  @override
+  void onClose() {
+    super.onClose();
+    saveAccounts();
+  }
   /// 保存账号
   void addAccount(Account account) {
     accounts.add(account);

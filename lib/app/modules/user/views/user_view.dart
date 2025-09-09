@@ -30,6 +30,8 @@ class UserView extends GetView<UserController> {
           exit(),
           const SizedBox(height: 16),
           feedback(),
+          const SizedBox(height: 16),
+          about(),
         ],
       ),
     );
@@ -104,7 +106,7 @@ class UserView extends GetView<UserController> {
   Widget frendsAuth() {
     return InkWell(
       onTap: (){
-        Get.snackbar("功能正在开发中","");
+        Get.toNamed("/account-manager");
       },
       child: Card(
         color: Colors.yellow[700],
@@ -221,5 +223,51 @@ class UserView extends GetView<UserController> {
 
 }
 
+
+  Widget about() {
+    return InkWell(
+      onTap: () {
+        final TextEditingController controller = TextEditingController();
+
+        Get.dialog(
+          AlertDialog(
+            title: const Text("关于"),
+            content: Container(
+              height: 500,
+              width: 400,
+              child:Column(
+                children: [
+                  Text("软件名称：AutoCheckIn/不上早八    ",style: TextStyle(fontSize: 19),),
+                  Text("软件版本：v0.3BETA",style: TextStyle(fontSize: 15),),
+                  Text("软件作者：毕业后展示",style: TextStyle(fontSize: 15),),
+                  Text("禁止用于代签用途",style: TextStyle(fontSize: 25),),
+                ],
+              )
+            )
+          ),
+        );
+      },
+      child: Card(
+        color: Colors.green[700],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Center(
+            child: Text(
+              "关于app",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+
+
+  }
 
 }

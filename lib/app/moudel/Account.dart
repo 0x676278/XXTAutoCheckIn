@@ -1,7 +1,12 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
 class Account {
   String username;
   String password;
   String nickname;
+  RxBool isSelected = false.obs;
+  RxString status = 'success'.obs; // 'success', 'fail', ''
+  RxString message = ''.obs; // 错误信息
 
   Account({required this.username, required this.password, required this.nickname});
 
@@ -11,6 +16,7 @@ class Account {
       "username": username,
       "password": password,
       "nickname": nickname,
+
     };
   }
 
