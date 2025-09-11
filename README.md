@@ -9,6 +9,9 @@
 
 
 ---
+## 🚀 软件截图
+
+
 
 ## 🚀 功能特点
 
@@ -17,7 +20,7 @@
 - ✅ 扫码签到（支持滑块验证）
 - ✅ 位置签到（支持滑块验证）
 - ✅ 普通签到（支持滑块验证）
-- 🔜 后续增加联动签到功能  
+-  ✅ 帮朋友签到
 
 ---
 
@@ -26,20 +29,17 @@
 | 版本 | 日期     | 功能说明 |
 |------|---------|---------|
 | v0.1 | 2025-09 | 实现基础登录、登出、课程加载及扫码签到（滑块验证同样适用） |
-｜v0.8  |2025-9   | 实现位置，普通签到
-｜v1.0｜ 2025-9    ｜实现了好友协同签到
+|v0.2  |2025-9   | 实现位置，普通签到
+|v0.3 |2025-9 |实现了帮朋友签到
 ---
 
 ## 🔗 代码来源 / Credits
 
-- 滑块验证 `validate` 接口参考自 [作者A](https://github.com/Misaka-1314) 的项目 [Chaoxing-MiniProgram](https://github.com/Misaka-1314/Chaoxing-MiniProgram?tab=readme-ov-file)  
+- 滑块验证 `validate` 接口来自 [作者A](https://github.com/Misaka-1314) 的项目 [Chaoxing-MiniProgram](https://github.com/Misaka-1314/Chaoxing-MiniProgram?tab=readme-ov-file)  
 - HTTP 接口参考自 [作者B](https://github.com/MetaQiu) 的项目 [xxtSignApi](https://github.com/MetaQiu/xxtSignApi)  
 
 ---
 
 ## ⚙️ 编译与使用
 
-1. 克隆项目：
-```bash
-git clone <repo-url>
-cd autocheckin
+如果你使用的是学在xx，那么可能会提示“请使用学在xxapp签到”，需要修改/lib/chaoxinapi中的user agent。使用学习通的直接无视可以之际构建或者使用我构建好的apk
