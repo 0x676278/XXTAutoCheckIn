@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'app/global/GlobalController.dart';
 import 'app/modules/commonSign/controllers/common_sign_controller.dart';
 import 'app/modules/positionSign/controllers/position_sign_controller.dart';
+import 'app/multiple/AccountManager.dart';
 import 'app/routes/app_pages.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,7 @@ void main() {
   Get.put(LocationController());
   Get.put(PositionSignController());
   Get.put(CommonSignController());
+  Get.put(AccountManager());
   runApp(
     ScreenUtilInit(
       designSize: const Size(1080, 2400),   //设计稿的宽度和高度 px

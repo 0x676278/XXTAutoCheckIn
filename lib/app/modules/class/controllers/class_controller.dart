@@ -7,6 +7,7 @@ class ClassController extends GetxController {
   var courseWrapper = CourseDataWrapper().obs; // 整个课程表对象
   final chaoxinapi = Get.find<Chaoxinapi>();
   final globalController = Get.find<GlobalController>();
+  var isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -17,9 +18,15 @@ class ClassController extends GetxController {
   }
 
   Future<void> fetchCourseData() async {
-    final wrapper = await chaoxinapi.getClassTable();
-    courseWrapper.value = wrapper;
-    print(wrapper);
+    isLoading.value=true;
+    try {
+      final wrapper = await chaoxinapi.getClassTable();
+      courseWrapper.value = wrapper; // 整体替换，UI 才能刷新
+    } catch (e) {
+      print("获取课程数据失败: $e");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   Future checkIfActive(var courseId, var classId) async {

@@ -56,6 +56,18 @@ class CheckInView extends GetView<CheckInController> {
               child: const Text("普通签到"),
             ),
           ),
+          SizedBox(height: 5,),
+          Container(
+            margin: const EdgeInsets.all(10),
+            height: 50,
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.toNamed("/sign-proxy");
+              },
+              child: const Text("帮朋友签到"),
+            ),
+          ),
         ],
       ),
     );

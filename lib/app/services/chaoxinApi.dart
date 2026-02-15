@@ -163,6 +163,7 @@ class Chaoxinapi extends GetxController {
 
     } catch (e) {
       print("登录异常: $e");
+      Get.snackbar("登陆错误", "登录异常: $e");
 
       return null;
     }
